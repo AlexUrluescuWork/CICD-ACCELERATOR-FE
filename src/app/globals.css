@@ -11,6 +11,7 @@
   --color-background: #f0f2f5;
   --color-white: #ffffff;
   --color-black: #000000;
+  --color-gray: #6c757d;
 
   --color-primary: #006bd8;
   --color-error: #ff0000;
@@ -32,7 +33,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  color: white;
+  /* color: white; */
 }
 
 .c-bg-primary {
@@ -45,6 +46,10 @@
 
 .c-bg-error {
   background-color: var(--color-error);
+}
+
+.c-bg-gray {
+  background-color: var(--color-gray);
 }
 
 .c-bg-legend-error {
@@ -79,8 +84,24 @@
   border: 1px solid var(--color-error);
 }
 
+.c-border-error {
+  border: 1px solid var(--color-gray);
+}
+
 .c-font-color-error {
   color: var(--color-error);
+}
+
+.c-font-color-gray {
+  color: var(--color-gray);
+}
+
+.c-font-color-white {
+  color: var(--color-white);
+}
+
+.c-font-color-primary {
+  color: var(--color-primary);
 }
 
 .c-font-color-error-light {
@@ -243,4 +264,68 @@
 
 .c-border-color-transparent {
   border-color: transparent;
+}
+
+.c-cursor-pointer {
+  cursor: pointer;
+}
+
+.c-font-weight-0 {
+  font-weight: 300;
+}
+
+.c-font-weight-1 {
+  font-weight: 400;
+}
+
+.c-font-weight-2 {
+  font-weight: 500;
+}
+
+.c-font-weight-3 {
+  font-weight: 600;
+}
+
+.c-font-weight-4 {
+  font-weight: 700;
+}
+
+.c-font-weight-5 {
+  font-weight: 800;
+}
+
+.c-font-weight-6 {
+  font-weight: 900;
+}
+
+.c-font-size-0 {
+  font-size: var(--size-none);
+}
+
+.c-font-size-1 {
+  font-size: var(--size-xsmall);
+}
+
+.c-font-size-2 {
+  font-size: var(--size-small);
+}
+
+.c-font-size-3 {
+  font-size: var(--size-medium);
+}
+
+.c-font-size-4 {
+  font-size: var(--size-large);
+}
+
+.c-font-size-5 {
+  font-size: var(--size-xlarge);
+}
+
+.c-font-size-6 {
+  font-size: var(--size-xxlarge);
+}
+
+.c-font-capitalize {
+  text-transform: capitalize;
 }
