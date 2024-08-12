@@ -1,0 +1,246 @@
+:root {
+  --size-none: 0px;
+  --size-xsmall: 8px;
+  --size-small: 16px;
+  --size-medium: 24px;
+  --size-large: 32px;
+  --size-xlarge: 40px;
+  --size-xxlarge: 48px;
+
+  --color-font: #000842;
+  --color-background: #f0f2f5;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-primary: #006bd8;
+  --color-error: #ff0000;
+  --color-success: #08b92e;
+  --color-warning: #faad14;
+  --color-primary-light: #80bdff;
+  --color-error-light: #fff1f0;
+  --color-success-light: #f6ffed;
+  --color-warning-light: #fffbe6;
+
+  --color-legend-error: #ff7576;
+  --color-legend-success: #2cd998;
+  --color-legend-good: #d9da2d;
+  --color-legend-satisfactory: #ffcd20;
+  --color-legend-passable: #fda930;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: white;
+}
+
+.c-bg-primary {
+  background-color: var(--color-primary);
+}
+
+.c-bg-primary-light {
+  background-color: var(--color-primary-light);
+}
+
+.c-bg-error {
+  background-color: var(--color-error);
+}
+
+.c-bg-legend-error {
+  background-color: var(--color-legend-error);
+}
+
+.c-bg-legend-success {
+  background-color: var(--color-legend-success);
+}
+
+.c-bg-legend-good {
+  background-color: var(--color-legend-good);
+}
+
+.c-bg-legend-satisfactory {
+  background-color: var(--color-legend-satisfactory);
+}
+
+.c-bg-legend-passable {
+  background-color: var(--color-legend-passable);
+}
+
+.c-bg-error {
+  background-color: var(--color-error);
+}
+
+.c-bg-error-light {
+  background-color: var(--color-error-light);
+}
+
+.c-border-error {
+  border: 1px solid var(--color-error);
+}
+
+.c-font-color-error {
+  color: var(--color-error);
+}
+
+.c-font-color-error-light {
+  color: var(--color-error-light);
+}
+
+.c-p-0 {
+  padding: var(--size-none);
+}
+
+.c-p-1 {
+  padding: var(--size-xsmall);
+}
+
+.c-p-2 {
+  padding: var(--size-small);
+}
+
+.c-p-3 {
+  padding: var(--size-medium);
+}
+
+.c-p-4 {
+  padding: var(--size-large);
+}
+
+.c-p-5 {
+  padding: var(--size-xlarge);
+}
+
+.c-p-6 {
+  padding: var(--size-xxlarge);
+}
+
+.c-p-x-0 {
+  padding-left: var(--size-none);
+  padding-right: var(--size-none);
+}
+
+.c-p-x-1 {
+  padding-left: var(--size-xsmall);
+  padding-right: var(--size-xsmall);
+}
+
+.c-p-x-2 {
+  padding-left: var(--size-small);
+  padding-right: var(--size-small);
+}
+
+.c-p-x-3 {
+  padding-left: var(--size-medium);
+  padding-right: var(--size-medium);
+}
+
+.c-p-x-4 {
+  padding-left: var(--size-large);
+  padding-right: var(--size-large);
+}
+
+.c-p-x-5 {
+  padding-left: var(--size-xlarge);
+  padding-right: var(--size-xlarge);
+}
+
+.c-p-x-6 {
+  padding-left: var(--size-xxlarge);
+  padding-right: var(--size-xxlarge);
+}
+
+.c-p-y-0 {
+  padding-top: var(--size-none);
+  padding-bottom: var(--size-none);
+}
+
+.c-p-y-1 {
+  padding-top: var(--size-xsmall);
+  padding-bottom: var(--size-xsmall);
+}
+
+.c-p-y-2 {
+  padding-top: var(--size-small);
+  padding-bottom: var(--size-small);
+}
+
+.c-p-y-3 {
+  padding-top: var(--size-medium);
+  padding-bottom: var(--size-medium);
+}
+
+.c-p-y-4 {
+  padding-top: var(--size-large);
+  padding-bottom: var(--size-large);
+}
+
+.c-p-y-5 {
+  padding-top: var(--size-xlarge);
+  padding-bottom: var(--size-xlarge);
+}
+
+.c-p-y-6 {
+  padding-top: var(--size-xxlarge);
+  padding-bottom: var(--size-xxlarge);
+}
+
+.c-w-100 {
+  width: 100%;
+}
+
+.c-w-75 {
+  width: 75%;
+}
+
+.c-w-50 {
+  width: 50%;
+}
+
+.c-w-25 {
+  width: 25%;
+}
+
+.c-w-0 {
+  width: 0;
+}
+
+.c-w-auto {
+  width: auto;
+}
+
+.c-fixed-b-radius-0 {
+  border-radius: var(--size-none);
+}
+
+.c-fixed-b-radius-1 {
+  border-radius: calc(var(--size-xsmall) / 2);
+}
+
+.c-fixed-b-radius-2 {
+  border-radius: calc(var(--size-small) / 2);
+}
+
+.c-fixed-b-radius-3 {
+  border-radius: calc(var(--size-medium) / 2);
+}
+
+.c-fixed-b-radius-4 {
+  border-radius: calc(var(--size-large) / 2);
+}
+
+.c-fixed-b-radius-5 {
+  border-radius: calc(var(--size-xlarge) / 2);
+}
+
+.c-fixed-b-radius-6 {
+  border-radius: calc(var(--size-xxlarge) / 2);
+}
+
+.c-fixed-b-radius-20 {
+  border-radius: 20px;
+}
+
+.c-border-color-transparent {
+  border-color: transparent;
+}
