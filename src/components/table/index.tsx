@@ -4,20 +4,86 @@ import Image from "next/image";
 import trash from "../../../public/icons/trash.svg";
 import { DownOutlined, RightOutlined } from "@ant-design/icons";
 import dummy from "../../../testing/dummy.json";
-import { log } from "console";
 
-interface DataType {
-  key: React.Key;
+type CustomExpandIconProps<T> = {
+  expanded: boolean;
+  onExpand: (
+    record: T,
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => void;
+  record: T;
+};
+
+interface objectType {
+  content: string;
+  start: string;
+  end: string;
+}
+
+interface objectType2 {
+  version: string;
+  start: string;
+  end: string;
+}
+
+interface ITypes {
   name: string;
-  sandBox: string;
-  qa: string;
-  uat: string;
-  staging: string;
-  production: string;
+  sandBox: objectType;
+  qa: objectType;
+  uat: objectType;
+  staging: objectType;
+  production: objectType;
+}
+
+interface IDetails {
+  rollback: ITypes;
+  deploymentDateTime: ITypes;
+  pipelineRun: ITypes;
+  changeLog: ITypes;
+  deploymentHistory: ITypes;
+}
+
+interface IntireObject {
+  id: string;
+  name: string;
+  sandBox: objectType2;
+  qa: objectType2;
+  uat: objectType2;
+  staging: objectType2;
+  production: objectType2;
+  details: IDetails;
 }
 
 export const CustomTable = () => {
-  const expandedRowRender = (record: any) => {
+  const getColorByTime = (start: string, end: string) => {
+    console.log("start", start);
+    console.log("end", end);
+
+    const date1: Date = new Date(start); // August 10, 2024 12:00 PM
+    const date2: Date = new Date(end); // August 12, 2024 6:30 PM
+
+    // Get the difference in milliseconds
+    const diffInMs: number = date2.getTime() - date1.getTime();
+
+    // Convert milliseconds to hours
+    const hoursDiff: number = diffInMs / (1000 * 60 * 60);
+
+    console.log(hoursDiff);
+
+    if (hoursDiff > 24) {
+      return "c-bg-legend-passable";
+    } else if (hoursDiff > 5 && hoursDiff < 12) {
+      return "c-bg-legend-satisfactory";
+    } else if (hoursDiff > 1 && hoursDiff < 5) {
+      return "c-bg-legend-good";
+    } else if (hoursDiff < 1) {
+      return "c-bg-legend-success";
+    }
+  };
+
+  const expandedRowRender = (record: IntireObject) => {
+    console.log("record", record);
+
     const columns = [
       {
         title: "Application name",
@@ -40,13 +106,17 @@ export const CustomTable = () => {
         dataIndex: "sandBox",
         key: "sandBox",
         width: "auto",
-        render: (text: string) => (
+        render: (text: objectType, row: { name: string }) => (
           <Flex
             justify="center"
-            className="c-p-1 c-font-color-white"
-            style={{ backgroundColor: "red", minWidth: "100px" }}
+            className={`c-p-1 c-font-color-gray`}
+            style={{ minWidth: "100px" }}
           >
-            {text}
+            {row.name === "Rollback" || row.name === "Deployment Date Time" ? (
+              text.content
+            ) : (
+              <a>{text.content}</a>
+            )}
           </Flex>
         ),
       },
@@ -54,13 +124,17 @@ export const CustomTable = () => {
         title: "QA",
         dataIndex: "qa",
         key: "qa",
-        render: (text: string) => (
+        render: (text: objectType, row: { name: string }) => (
           <Flex
             justify="center"
-            className="c-p-1 c-font-color-white"
-            style={{ backgroundColor: "red", minWidth: "100px" }}
+            className={`c-p-1 c-font-color-gray`}
+            style={{ minWidth: "100px" }}
           >
-            {text}
+            {row.name === "Rollback" || row.name === "Deployment Date Time" ? (
+              text.content
+            ) : (
+              <a>{text.content}</a>
+            )}
           </Flex>
         ),
       },
@@ -68,13 +142,17 @@ export const CustomTable = () => {
         title: "UAT",
         dataIndex: "uat",
         key: "uat",
-        render: (text: string) => (
+        render: (text: objectType, row: { name: string }) => (
           <Flex
             justify="center"
-            className="c-p-1 c-font-color-white"
-            style={{ backgroundColor: "red", minWidth: "100px" }}
+            className={`c-p-1 c-font-color-gray`}
+            style={{ minWidth: "100px" }}
           >
-            {text}
+            {row.name === "Rollback" || row.name === "Deployment Date Time" ? (
+              text.content
+            ) : (
+              <a>{text.content}</a>
+            )}
           </Flex>
         ),
       },
@@ -82,13 +160,17 @@ export const CustomTable = () => {
         title: "Staging",
         dataIndex: "staging",
         key: "staging",
-        render: (text: string) => (
+        render: (text: objectType, row: { name: string }) => (
           <Flex
             justify="center"
-            className="c-p-1 c-font-color-white"
-            style={{ backgroundColor: "red", minWidth: "100px" }}
+            className={`c-p-1 c-font-color-gray`}
+            style={{ minWidth: "100px" }}
           >
-            {text}
+            {row.name === "Rollback" || row.name === "Deployment Date Time" ? (
+              text.content
+            ) : (
+              <a>{text.content}</a>
+            )}
           </Flex>
         ),
       },
@@ -96,27 +178,55 @@ export const CustomTable = () => {
         title: "Production",
         dataIndex: "production",
         key: "production",
-        render: (text: string) => (
+        render: (text: objectType, row: { name: string }) => (
           <Flex
             justify="center"
-            className="c-p-1 c-font-color-white"
-            style={{ backgroundColor: "red", minWidth: "100px" }}
+            className={`c-p-1 c-font-color-gray`}
+            style={{ minWidth: "100px" }}
           >
-            {text}
+            {row.name === "Rollback" || row.name === "Deployment Date Time" ? (
+              text.content
+            ) : (
+              <a>{text.content}</a>
+            )}
           </Flex>
         ),
       },
     ];
 
-    const detailsData = Object.keys(record.details).map((key) => ({
-      key,
-      name: key,
-      sandBox: record.details[key].sandBox,
-      qa: record.details[key].qa,
-      uat: record.details[key].uat,
-      staging: record.details[key].staging,
-      production: record.details[key].production,
-    }));
+    console.log("record.details", record.details);
+
+    const detailsData = (Object.keys(record.details) as (keyof IDetails)[]).map(
+      (key) => ({
+        key,
+        name: record.details[key].name,
+        sandBox: {
+          content: record.details[key].sandBox.content,
+          start: record.details[key].sandBox.start,
+          end: record.details[key].sandBox.end,
+        },
+        qa: {
+          content: record.details[key].qa.content,
+          start: record.details[key].qa.start,
+          end: record.details[key].qa.end,
+        },
+        uat: {
+          content: record.details[key].uat.content,
+          start: record.details[key].uat.start,
+          end: record.details[key].uat.end,
+        },
+        staging: {
+          content: record.details[key].staging.content,
+          start: record.details[key].staging.start,
+          end: record.details[key].staging.end,
+        },
+        production: {
+          content: record.details[key].production.content,
+          start: record.details[key].production.start,
+          end: record.details[key].production.end,
+        },
+      })
+    );
 
     console.log("detailsData", detailsData);
 
@@ -130,7 +240,7 @@ export const CustomTable = () => {
     );
   };
 
-  const customExpandIcon = (props: any) => {
+  const customExpandIcon = <T,>(props: CustomExpandIconProps<T>) => {
     if (props.expanded) {
       return <DownOutlined onClick={(e) => props.onExpand(props.record, e)} />;
     } else {
@@ -138,7 +248,7 @@ export const CustomTable = () => {
     }
   };
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<IntireObject> = [
     {
       title: "Application name",
       dataIndex: "name",
@@ -170,10 +280,13 @@ export const CustomTable = () => {
       render: (_, record) => (
         <Flex
           justify="center"
-          className="c-p-1 c-font-color-white"
-          style={{ backgroundColor: "pink", minWidth: "100px" }}
+          className={`c-p-1 c-font-color-white ${getColorByTime(
+            record.sandBox.start,
+            record.sandBox.end
+          )}`}
+          style={{ minWidth: "100px" }}
         >
-          {record.sandBox}
+          {record.sandBox.version}
         </Flex>
       ),
     },
@@ -195,10 +308,13 @@ export const CustomTable = () => {
       render: (_, record) => (
         <Flex
           justify="center"
-          className="c-p-1 c-font-color-white"
-          style={{ backgroundColor: "pink", minWidth: "100px" }}
+          className={`c-p-1 c-font-color-white ${getColorByTime(
+            record.qa.start,
+            record.qa.end
+          )}`}
+          style={{ minWidth: "100px" }}
         >
-          {record.qa}
+          {record.qa.version}
         </Flex>
       ),
     },
@@ -210,10 +326,13 @@ export const CustomTable = () => {
       render: (_, record) => (
         <Flex
           justify="center"
-          className="c-p-1 c-font-color-white"
-          style={{ backgroundColor: "pink", minWidth: "100px" }}
+          className={`c-p-1 c-font-color-white ${getColorByTime(
+            record.uat.start,
+            record.uat.end
+          )}`}
+          style={{ minWidth: "100px" }}
         >
-          {record.uat}
+          {record.uat.version}
         </Flex>
       ),
     },
@@ -235,10 +354,13 @@ export const CustomTable = () => {
       render: (_, record) => (
         <Flex
           justify="center"
-          className="c-p-1 c-font-color-white"
-          style={{ backgroundColor: "pink", minWidth: "100px" }}
+          className={`c-p-1 c-font-color-white ${getColorByTime(
+            record.staging.start,
+            record.staging.end
+          )}`}
+          style={{ minWidth: "100px" }}
         >
-          {record.staging}
+          {record.staging.version}
         </Flex>
       ),
     },
@@ -251,27 +373,17 @@ export const CustomTable = () => {
       render: (_, record) => (
         <Flex
           justify="center"
-          className="c-p-1 c-font-color-white"
-          style={{ backgroundColor: "pink", minWidth: "100px" }}
+          className={`c-p-1 c-font-color-white ${getColorByTime(
+            record.production.start,
+            record.production.end
+          )}`}
+          style={{ minWidth: "100px" }}
         >
-          {record.production}
+          {record.production.version}
         </Flex>
       ),
     },
   ];
-
-  const data: DataType[] = [];
-  for (let i = 0; i < 3; ++i) {
-    data.push({
-      key: i.toString(),
-      name: "Screen",
-      sandBox: "v12.1.3-1",
-      qa: "v13.1.3-1",
-      uat: "v14.1.3-1",
-      staging: "v15.1.3-1",
-      production: "v16.1.3-1",
-    });
-  }
 
   return (
     <Table
@@ -284,6 +396,50 @@ export const CustomTable = () => {
       }}
       dataSource={dummy}
       rowKey={(record) => record.id}
+      footer={() => (
+        <Flex className="c-p-y-3 c-p-x-1">
+          <Flex className="c-w-25" align="center">
+            Legend
+          </Flex>
+          <Flex justify="space-evenly" gap={20} className="c-w-75">
+            <Flex align="center" gap={10}>
+              <div
+                className="c-bg-legend-success"
+                style={{ width: 70, height: 30 }}
+              ></div>
+              <span>1h</span>
+            </Flex>
+            <Flex align="center" gap={10}>
+              <div
+                className="c-bg-legend-good"
+                style={{ width: 70, height: 30 }}
+              ></div>
+              <span>1h - 5h</span>
+            </Flex>
+            <Flex align="center" gap={10}>
+              <div
+                className="c-bg-legend-satisfactory"
+                style={{ width: 70, height: 30 }}
+              ></div>
+              <span>5h - 12h</span>
+            </Flex>
+            <Flex align="center" gap={10}>
+              <div
+                className="c-bg-legend-passable"
+                style={{ width: 70, height: 30 }}
+              ></div>
+              <span>24h</span>
+            </Flex>
+            <Flex align="center" gap={10}>
+              <div
+                className="c-bg-legend-error"
+                style={{ width: 70, height: 30 }}
+              ></div>
+              <span>Failure</span>
+            </Flex>
+          </Flex>
+        </Flex>
+      )}
     />
   );
 };

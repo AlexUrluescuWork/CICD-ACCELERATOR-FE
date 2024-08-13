@@ -2,138 +2,342 @@
   {
     "id": "1",
     "name": "Credit card application",
-    "sandBox": "v12.1.3-1",
-    "qa": "v13.1.3-1",
-    "uat": "v14.1.3-1",
-    "staging": "v15.1.3-1",
-    "production": "v16.1.3-1",
+    "sandBox": {
+      "version": "v12.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-10T12:30:00"
+    },
+    "qa": {
+      "version": "v13.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-10T18:30:00"
+    },
+    "uat": {
+      "version": "v14.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-12T18:30:00"
+    },
+    "staging": {
+      "version": "v15.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-12T18:30:00"
+    },
+    "production": {
+      "version": "v16.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-10T12:30:00"
+    },
     "details": {
       "rollback": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Rollback",
+        "sandBox": {
+          "content": "N",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T12:30:00"
+        },
+        "qa": {
+          "content": "N",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "N",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Y",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Y",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "deploymentDateTime": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Deployment Date Time",
+        "sandBox": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T18:30:00"
+        },
+        "qa": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T18:30:00"
+        },
+        "uat": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-11T18:30:00"
+        },
+        "production": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "pipelineRun": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Pipeline Run",
+        "sandBox": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T14:30:00"
+        },
+        "qa": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "changeLog": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Changelog",
+        "sandBox": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "qa": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "deploymentHistory": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Deployment History",
+        "sandBox": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "qa": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       }
     }
   },
   {
     "id": "2",
-    "name": "Onboarding application",
-    "sandBox": "v12.1.3-1",
-    "qa": "v13.1.3-1",
-    "uat": "v14.1.3-1",
-    "staging": "v15.1.3-1",
-    "production": "v16.1.3-1",
-    "details": {
-      "rollback": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
-      },
-      "deploymentDateTime": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
-      },
-      "pipelineRun": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
-      },
-      "changeLog": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
-      },
-      "deploymentHistory": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
-      }
-    }
-  },
-  {
-    "id": "3",
     "name": "CDI application",
-    "sandBox": "v12.1.3-1",
-    "qa": "v13.1.3-1",
-    "uat": "v14.1.3-1",
-    "staging": "v15.1.3-1",
-    "production": "v16.1.3-1",
+    "sandBox": {
+      "version": "v12.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-10T14:30:00"
+    },
+    "qa": {
+      "version": "v13.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-10T12:30:00"
+    },
+    "uat": {
+      "version": "v14.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-12T13:30:00"
+    },
+    "staging": {
+      "version": "v15.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-12T18:30:00"
+    },
+    "production": {
+      "version": "v16.1.3-1",
+      "start": "2024-08-10T12:00:00",
+      "end": "2024-08-12T18:30:00"
+    },
     "details": {
       "rollback": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Rollback",
+        "sandBox": {
+          "content": "N",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T12:30:00"
+        },
+        "qa": {
+          "content": "N",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "N",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Y",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Y",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "deploymentDateTime": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Deployment Date Time",
+        "sandBox": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T18:30:00"
+        },
+        "qa": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T18:30:00"
+        },
+        "uat": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-11T18:30:00"
+        },
+        "production": {
+          "content": "21/03/2024 15:29:24",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "pipelineRun": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Pipeline Run",
+        "sandBox": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-10T14:30:00"
+        },
+        "qa": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Pipeline Run",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "changeLog": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Changelog",
+        "sandBox": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "qa": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Changelog",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       },
       "deploymentHistory": {
-        "sandBox": "v12.1.3-1",
-        "qa": "v13.1.3-1",
-        "uat": "v14.1.3-1",
-        "staging": "v15.1.3-1",
-        "production": "v16.1.3-1"
+        "name": "Deployment History",
+        "sandBox": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "qa": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "uat": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "staging": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        },
+        "production": {
+          "content": "Deployment History",
+          "start": "2024-08-10T12:00:00",
+          "end": "2024-08-12T18:30:00"
+        }
       }
     }
   }
