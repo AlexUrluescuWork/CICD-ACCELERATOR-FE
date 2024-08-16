@@ -12,6 +12,8 @@
   --color-white: #ffffff;
   --color-black: #000000;
   --color-gray: #6c757d;
+  --color-gray-light2: #f7f7f7;
+  --color-gray-light: #ededed;
 
   --color-primary: #006bd8;
   --color-error: #ff0000;
@@ -76,6 +78,14 @@
   background-color: var(--color-error);
 }
 
+.c-bg-white {
+  background-color: var(--color-white);
+}
+
+.c-bg-gray-light {
+  background-color: var(--color-gray-light2);
+}
+
 .c-bg-error-light {
   background-color: var(--color-error-light);
 }
@@ -84,8 +94,24 @@
   border: 1px solid var(--color-error);
 }
 
-.c-border-error {
+.c-border-white {
+  border: 1px solid var(--color-white);
+}
+
+.c-border-gray {
   border: 1px solid var(--color-gray);
+}
+
+.c-border-top-gray {
+  border-top: 1px solid var(--color-gray-light);
+}
+
+.c-border-botton-gray {
+  border-bottom: 1px solid var(--color-gray-light);
+}
+
+.c-border-gray-light {
+  border: 1px solid var(--color-gray-light);
 }
 
 .c-font-color-error {
@@ -94,6 +120,10 @@
 
 .c-font-color-gray {
   color: var(--color-gray);
+}
+
+.c-font-color-black {
+  color: var(--color-black);
 }
 
 .c-font-color-white {
@@ -214,6 +244,10 @@
   width: 75%;
 }
 
+.c-w-80 {
+  width: 80%;
+}
+
 .c-w-50 {
   width: 50%;
 }
@@ -256,6 +290,10 @@
 
 .c-fixed-b-radius-6 {
   border-radius: calc(var(--size-xxlarge) / 2);
+}
+
+.c-border-circle {
+  border-radius: 50%;
 }
 
 .c-fixed-b-radius-20 {
@@ -328,4 +366,14 @@
 
 .c-font-capitalize {
   text-transform: capitalize;
+}
+
+.c-row {
+  height: 70px;
+}
+
+.custom-table .ant-table-thead > tr > th {
+  font-weight: bold; /* Make the font bold */
+  padding: 16px; /* Padding for the header cells */
+  background-color: white;
 }
