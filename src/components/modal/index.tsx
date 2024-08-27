@@ -2,31 +2,37 @@ import React, { useState } from "react";
 import { Button, Checkbox, Flex, Input, Modal, Select } from "antd";
 import minusIcon from "../../../public/icons/minus.svg";
 import Image from "next/image";
+import { TApplication, TInputsValues } from "@/types";
 
 interface IModal {
   isModalOpen: boolean;
   showModal: () => void;
   handleOk: () => void;
   handleCancel: () => void;
-  projects: IProject[];
+  applications: TApplication[];
+  handleSubmit: (values: any) => void;
+  setTableData: any;
 }
 
-interface IProject {
-  label: string;
-  value: string;
-}
+const initialValues = {
+  environment: "",
+  gitBranch: "",
+};
 
 export const CustomModal: React.FC<IModal> = ({
   isModalOpen,
   showModal,
   handleOk,
   handleCancel,
-  projects,
+  applications,
+  handleSubmit,
 }) => {
-  const [selValues, setSelValues] = useState<IProject[]>([]);
+  const [selValues, setSelValues] = useState<TApplication[]>([]);
   const [searchInput, setSearchInput] = useState<string>("");
+  const [inputsValues, setInputsValues] =
+    useState<TInputsValues>(initialValues);
 
-  const handleCheckboxChange = (checked: boolean, option: IProject) => {
+  const handleCheckboxChange = (checked: boolean, option: TApplication) => {
     const newValue = checked
       ? [...selValues, { label: option.label, value: option.value }]
       : selValues.filter((project) => project.value !== option.value);
@@ -43,9 +49,28 @@ export const CustomModal: React.FC<IModal> = ({
   };
 
   // Filter options based on search input
-  const filteredOptions = projects.filter((option) =>
-    option.label.toLowerCase().includes(searchInput.toLowerCase())
+  const filteredOptions = applications.filter((app) =>
+    app.label.toLowerCase().includes(searchInput.toLowerCase())
   );
+
+  const handleInputsChange = (e: any) => {
+    const { name, value } = e.target;
+
+    setInputsValues((prevState) => ({
+      ...prevState,
+      [name]: value, // This line ensures the correct property is updated based on the input's name attribute
+    }));
+  };
+
+  const handleSend = () => {
+    const objectToRetrive = {
+      applications: [...selValues],
+      environment: inputsValues.environment,
+      gitBranch: inputsValues.gitBranch,
+    };
+
+    handleSubmit(objectToRetrive);
+  };
 
   return (
     <>
@@ -60,6 +85,7 @@ export const CustomModal: React.FC<IModal> = ({
             <Button
               onClick={() => {
                 setSelValues([]);
+                setInputsValues(initialValues);
                 handleCancel();
               }}
             >
@@ -135,15 +161,28 @@ export const CustomModal: React.FC<IModal> = ({
             </Flex>
             <Flex vertical gap={10}>
               <span>Environment name</span>
-              <Input placeholder="Preprod"></Input>
+              <Input
+                value={inputsValues.environment}
+                name="environment"
+                onChange={(e) => handleInputsChange(e)}
+                placeholder="Preprod"
+              ></Input>
             </Flex>
             <Flex vertical gap={10}>
               <span>Git branch</span>
-              <Input placeholder="Branch"></Input>
+              <Input
+                value={inputsValues.gitBranch}
+                name="gitBranch"
+                onChange={(e) => handleInputsChange(e)}
+                placeholder="Branch"
+              ></Input>
             </Flex>
           </Flex>
           <Flex className="c-w-100" justify="center">
-            <Button type="primary">Create new environment</Button>
+            <Button onClick={handleSend} type="primary">
+              Create new environment
+            </Button>
+            {/* <Button onClick={handleTest}>test</Button> */}
           </Flex>
         </Flex>
       </Modal>

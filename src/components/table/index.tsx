@@ -533,84 +533,72 @@
 
 import {
   Button,
+  Checkbox,
   ConfigProvider,
   Flex,
   Table,
   TableColumnsType,
   Tooltip,
 } from "antd";
-import Image from "next/image";
-import trash from "../../../public/icons/trash.svg";
 import {
   DownOutlined,
   RightOutlined,
   CaretUpOutlined,
   CaretDownOutlined,
 } from "@ant-design/icons";
-import dummy from "../../../testing/dummy.json";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import {
+  CustomExpandIconProps,
+  EnvStatusTypes,
+  IEnvDetails,
+  IntireObject,
+} from "@/types";
 
-type CustomExpandIconProps<T> = {
-  expanded: boolean;
-  onExpand: (
-    record: T,
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => void;
-  record: T;
-};
-
-interface objectType {
-  content: string;
-  start: string;
-  end: string;
+interface ICustomTable {
+  tableData: IntireObject[];
+  setTableData: React.Dispatch<React.SetStateAction<IntireObject[]>>;
+  dynamicColumns: any[];
+  setDynamicColumns: any;
 }
 
-interface objectType2 {
-  version: string;
-  start: string;
-  end: string;
-}
+export const CustomTable: React.FC<ICustomTable> = ({
+  tableData,
+  setTableData,
+  dynamicColumns,
+  setDynamicColumns,
+}) => {
+  const filterData = tableData.map((app) => ({
+    text: app.name,
+    value: app.name,
+  }));
 
-interface ITypes {
-  name: string;
-  sandBox: objectType;
-  qa: objectType;
-  uat: objectType;
-  staging: objectType;
-  production: objectType;
-  [key: string]: objectType | any;
-}
+  const sandBoxFilters = [
+    { text: "Active", value: EnvStatusTypes.ACTIVE },
+    { text: "Loading", value: EnvStatusTypes.LOADING },
+    { text: "Failure", value: EnvStatusTypes.FAILURE },
+  ];
 
-interface IDetails {
-  rollback: ITypes;
-  deploymentDateTime: ITypes;
-  pipelineRun: ITypes;
-  changeLog: ITypes;
-  deploymentHistory: ITypes;
-}
-
-export interface IntireObject {
-  id: string;
-  name: string;
-  activity: number;
-  sandBox: objectType2;
-  qa: objectType2;
-  uat: objectType2;
-  staging: objectType2;
-  production: objectType2;
-  details: IDetails;
-  [key: string]: objectType2 | string | number | IDetails; // Index signature for dynamic keys
-}
-
-type DynamicColumn<T> = TableColumnsType<T>[number];
-
-export const CustomTable = () => {
-  const [tableData, setTableData] = useState<IntireObject[]>(dummy);
   const [sortOrder, setSortOrder] = useState<string>("asc");
-  const [dynamicColumns, setDynamicColumns] = useState<any>([]);
-  // const [columnWidth, setColumnWidth] = useState<number>();
-  const [newEnv, setNewEnv] = useState<string>("");
+  const [checked, setChecked] = useState<boolean>(true);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(
+    filterData.map((filter) => filter.value)
+  );
+  const [selectedFilterSandBox, setSelectedFiltersSandBox] = useState<string[]>(
+    []
+  );
 
+  const handleMasterCheckboxChange = (e: CheckboxChangeEvent) => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      setChecked(true);
+      setSelectedFilters(filterData.map((filter) => filter.value));
+    } else {
+      setChecked(false);
+      setSelectedFilters([]);
+    }
+  };
   // const computedWidth = () => {
   //   let environments = ["sandBox", "qa", "uat", "staging", "production"];
   //   if (dynamicColumns.length > 0) {
@@ -637,20 +625,29 @@ export const CustomTable = () => {
     }
   };
 
-  const filterData = tableData.map((app) => ({
-    text: app.name,
-    value: app.name,
-  }));
-
-  const getColorByTime = (start: string, end: string) => {
+  const getTheTimeInterval = (start: string) => {
     const date1: Date = new Date(start);
     const date2: Date = new Date();
 
     const diffInMs: number = date2.getTime() - date1.getTime();
     const hoursDiff: number = diffInMs / (1000 * 60 * 60);
 
-    if (end === "error") {
+    return hoursDiff;
+  };
+
+  const getColorByTime = (start: string, end: string, status: any) => {
+    const date1: Date = new Date(start);
+    const date2: Date = new Date();
+
+    const diffInMs: number = date2.getTime() - date1.getTime();
+    const hoursDiff: number = diffInMs / (1000 * 60 * 60);
+
+    if (status === EnvStatusTypes.FAILURE) {
       return "c-bg-legend-error";
+    }
+
+    if (status === EnvStatusTypes.LOADING) {
+      return "c-bg-gray";
     }
 
     if (hoursDiff > 12 && hoursDiff < 24) {
@@ -681,15 +678,11 @@ export const CustomTable = () => {
       version: "version2",
       start: "2024-08-13T10:00:00",
       end: "2024-08-13T18:30:00",
+      status: "loaging",
     };
+    const newValue2 = "test";
 
-    setNewEnv(dynamicKey);
-
-    const newValue2 = {
-      content: "test",
-      end: "2024-08-12T18:30:00",
-      start: "2024-08-10T12:00:00",
-    };
+    setTableData([...tableData]);
 
     // Update the state to include the new dynamic key in each object
     setTableData((prevData) =>
@@ -740,20 +733,16 @@ export const CustomTable = () => {
       version: "version",
       start: "2024-08-13T10:00:00",
       end: "2024-08-13T18:30:00",
+      status: "active",
     };
 
-    setNewEnv("testing");
-
-    const newValue2 = {
-      content: "test",
-      end: "2024-08-12T18:30:00",
-      start: "2024-08-10T12:00:00",
-    };
+    const newValue2 = "test";
 
     // Update the state to include the new dynamic key in each object
     setTableData((prevData) =>
       prevData.map((item) => ({
         ...item, // Spread existing properties
+        status: "active",
         details: {
           ...item.details, // Spread existing details
           changeLog: {
@@ -814,21 +803,40 @@ export const CustomTable = () => {
         dataIndex: env,
         key: env,
         width: 150,
-        render: (text: objectType, row: { name: string }) => (
-          <Flex
-            justify="center"
-            className={`c-p-1 c-font-color-gray`}
-            style={{ width: 150, minHeight: "50px" }}
-          >
-            {row.name === "Rollback" || row.name === "Deployment Date Time" ? (
-              <span style={{ fontSize: 13 }}>{text.content}</span>
-            ) : (
-              <Flex className="c-w-100" justify="center">
-                <a style={{ fontSize: 13 }}>{text.content}</a>
+        render: (text: string, row: { name: string }) => {
+          let component;
+
+          if (text === EnvStatusTypes.LOADING) {
+            component = (
+              <Flex
+                justify="center"
+                className={`c-p-1 c-font-color-gray`}
+                style={{ width: 150, minHeight: "50px" }}
+              >
+                <span style={{ fontSize: 13 }}>-</span>
               </Flex>
-            )}
-          </Flex>
-        ),
+            );
+          } else {
+            component = (
+              <Flex
+                justify="center"
+                className={`c-p-1 c-font-color-gray`}
+                style={{ width: 150, minHeight: "50px" }}
+              >
+                {row.name === "Rollback" ||
+                row.name === "Deployment Date Time" ? (
+                  <span style={{ fontSize: 13 }}>{text}</span>
+                ) : (
+                  <Flex className="c-w-100" justify="center">
+                    <a style={{ fontSize: 13 }}>{text}</a>
+                  </Flex>
+                )}
+              </Flex>
+            );
+          }
+
+          return component;
+        },
       })),
     ];
 
@@ -869,23 +877,38 @@ export const CustomTable = () => {
     //   })
     // );
 
-    const detailsData = (Object.keys(record.details) as (keyof IDetails)[]).map(
-      (key) => ({
-        key,
-        name: record.details[key].name,
-        ...environments.reduce(
-          (acc, env) => ({
-            ...acc,
-            [env]: {
-              content: record.details[key][env]?.content || "",
-              start: record.details[key][env]?.start || "",
-              end: record.details[key][env]?.end || "",
-            },
-          }),
-          {}
-        ),
-      })
-    );
+    // const detailsData = (Object.keys(record.details) as (keyof IDetails)[]).map(
+    //   (key) => ({
+    //     key,
+    //     name: record.details[key].name,
+    //     ...environments.reduce(
+    //       (acc, env) => ({
+    //         ...acc,
+    //         [env]: {
+    //           content: record.details[key][env]?.content || "",
+    //           start: record.details[key][env]?.start || "",
+    //           end: record.details[key][env]?.end || "",
+    //         },
+    //       }),
+    //       {}
+    //     ),
+    //   })
+    // );
+    const detailsData = (
+      Object.keys(record.details) as (keyof IEnvDetails)[]
+    ).map((key) => ({
+      key,
+      name: record.details[key].name,
+      ...environments.reduce(
+        (acc, env) => ({
+          ...acc,
+          [env]: record.details[key][env] || "", // Directly use the string value
+        }),
+        {}
+      ),
+    }));
+
+    console.log("detailsData", detailsData);
 
     return (
       <Table
@@ -895,6 +918,32 @@ export const CustomTable = () => {
         showHeader={false}
       />
     );
+  };
+
+  const handleIndividualFilterChange = (
+    filterValue: string,
+    checked: boolean
+  ) => {
+    if (checked) {
+      setSelectedFilters((prev) => [...prev, filterValue]);
+    } else {
+      setSelectedFilters((prev) =>
+        prev.filter((value) => value !== filterValue)
+      );
+    }
+  };
+
+  const handleIndividualFilterChange2 = (
+    filterValue: string,
+    checked: boolean
+  ) => {
+    if (checked) {
+      setSelectedFiltersSandBox((prev) => [...prev, filterValue]);
+    } else {
+      setSelectedFiltersSandBox((prev) =>
+        prev.filter((value) => value !== filterValue)
+      );
+    }
   };
 
   const customExpandIcon = <T,>(props: CustomExpandIconProps<T>) => {
@@ -907,7 +956,7 @@ export const CustomTable = () => {
 
   // Dynamic columns generator
   const generateDynamicColumns = (columns2: any): TableColumnsType<any> => {
-    let environments = ["sandBox", "qa", "uat", "staging", "production"];
+    let environments = ["qa", "uat", "staging", "production"];
     if (columns2.length > 0) {
       const dynamicColumnsNames = columns2.map(
         (column: any) => column.dataIndex
@@ -921,60 +970,154 @@ export const CustomTable = () => {
       key: env,
       align: "center",
       width: 150,
-      render: (_: any, record: any) => (
-        <Flex
-          justify="center"
-          align="center"
-          className={`c-p-1 ${getColorByTime(
-            record[env].start,
-            record[env].end
-          )}`}
-          style={{ width: 150, minHeight: "50px" }}
-        >
-          {record[env].content || record[env].version}
-        </Flex>
-      ),
+
+      render: (_: any, record: any) => {
+        const envData = record[env];
+
+        // Check if the envData is null or undefined
+        if (!envData) {
+          return (
+            <div style={{ width: 150, minHeight: "50px" }}>
+              {/* Render an empty box */}
+            </div>
+          );
+        }
+
+        // Render the usual content when envData is not null
+        return (
+          <Flex
+            justify="center"
+            align="center"
+            className={`c-p-1 ${getColorByTime(
+              envData.start,
+              envData.end,
+              envData.status
+            )}`}
+            style={{ width: 150, minHeight: "50px" }}
+          >
+            {envData.status === EnvStatusTypes.ACTIVE ||
+            envData.status === EnvStatusTypes.FAILURE
+              ? envData.version
+              : `${EnvStatusTypes.LOADING} ... `}
+          </Flex>
+        );
+      },
     }));
   };
+
+  const filterDropdown = (
+    <div style={{ padding: 8 }}>
+      <div style={{ marginBottom: 8 }}>
+        <Checkbox checked={checked} onChange={handleMasterCheckboxChange}>
+          Select All
+        </Checkbox>
+      </div>
+      {filterData.map((filter) => (
+        <div key={filter.value} style={{ marginBottom: 8 }}>
+          <Checkbox
+            checked={selectedFilters.includes(filter.value)}
+            onChange={(e) =>
+              handleIndividualFilterChange(filter.value, e.target.checked)
+            }
+          >
+            {filter.text}
+          </Checkbox>
+        </div>
+      ))}
+      <div style={{ marginTop: 8 }}>
+        <Button
+          type="primary"
+          onClick={() => {
+            // Close the filter dropdown manually (optional)
+            // You can implement logic to close the dropdown here if needed
+          }}
+        >
+          Apply
+        </Button>
+      </div>
+    </div>
+  );
+
+  const filterDropdown2 = (
+    <div style={{ padding: 8 }}>
+      <div style={{ marginBottom: 8 }}>
+        {/* <Checkbox checked={checked} onChange={handleMasterCheckboxChange}>
+          Select All
+        </Checkbox> */}
+      </div>
+      {sandBoxFilters.map((filter) => (
+        <div key={filter.value} style={{ marginBottom: 8 }}>
+          <Checkbox
+            checked={selectedFilterSandBox.includes(filter.value)}
+            onChange={(e) =>
+              handleIndividualFilterChange2(filter.value, e.target.checked)
+            }
+          >
+            {filter.text}
+          </Checkbox>
+        </div>
+      ))}
+      <div style={{ marginTop: 8 }}>
+        <Button
+          type="primary"
+          onClick={() => {
+            // Close the filter dropdown manually (optional)
+            // You can implement logic to close the dropdown here if needed
+          }}
+        >
+          Apply
+        </Button>
+      </div>
+    </div>
+  );
 
   const columns: TableColumnsType<IntireObject> = [
     {
       title: (
         <Flex justify="space-between">
           Application name
-          <Flex vertical>
-            <Tooltip title="Sort by the most active">
-              <CaretUpOutlined
-                onClick={() => {
-                  handleSortChange("desc");
-                  setSortOrder("desc");
-                }}
-                style={{
-                  fontSize: 12,
-                  color: sortOrder === "desc" ? "#006bd8" : "#BFBFBF",
-                }}
+          <Flex gap={10}>
+            <Flex>
+              <Checkbox
+                onChange={handleMasterCheckboxChange}
+                checked={checked}
               />
-            </Tooltip>
-            <Tooltip title="Sort by the less active">
-              <CaretDownOutlined
-                onClick={() => {
-                  handleSortChange("asc");
-                  setSortOrder("asc");
-                }}
-                style={{
-                  fontSize: 12,
-                  color: sortOrder === "asc" ? "#006bd8" : "#BFBFBF",
-                }}
-              />
-            </Tooltip>
+            </Flex>
+            <Flex vertical>
+              <Tooltip title="Sort by the most active">
+                <CaretUpOutlined
+                  onClick={() => {
+                    handleSortChange("desc");
+                    setSortOrder("desc");
+                  }}
+                  style={{
+                    fontSize: 12,
+                    color: sortOrder === "desc" ? "#006bd8" : "#BFBFBF",
+                  }}
+                />
+              </Tooltip>
+              <Tooltip title="Sort by the less active">
+                <CaretDownOutlined
+                  onClick={() => {
+                    handleSortChange("asc");
+                    setSortOrder("asc");
+                  }}
+                  style={{
+                    fontSize: 12,
+                    color: sortOrder === "asc" ? "#006bd8" : "#BFBFBF",
+                  }}
+                />
+              </Tooltip>
+            </Flex>
           </Flex>
         </Flex>
       ),
       dataIndex: "name",
       key: "name",
       width: "auto",
-      filters: filterData,
-      onFilter: (value, lr) => lr.name === value,
+      filterDropdown: filterDropdown,
+      filteredValue: selectedFilters,
+      onFilter: (value, lr) => selectedFilters.includes(lr.name),
       render: (_, record) => (
         <Flex>
           <span className="c-font-color-primary c-font-weight-2 c-font-size-2">
@@ -983,18 +1126,58 @@ export const CustomTable = () => {
         </Flex>
       ),
     },
+    {
+      title: "SandBox",
+      dataIndex: "sandBox",
+      key: "sandBox",
+      align: "center",
+      width: 150,
+      filterDropdown: filterDropdown2,
+      filteredValue: selectedFilterSandBox,
+      onFilter: (value, lr) =>
+        selectedFilterSandBox.includes(lr.sandBox?.status as string),
+      sorter: (a, b) =>
+        getTheTimeInterval(a.sandBox?.start as string) -
+        getTheTimeInterval(b.sandBox?.start as string),
+      render: (_, record) => {
+        const environment = record.sandBox;
+        if (!environment) {
+          return (
+            <div style={{ width: 150, minHeight: "50px" }}>
+              {/* Render an empty box */}
+            </div>
+          );
+        }
+        return (
+          <Flex
+            justify="center"
+            align="center"
+            className={`c-p-1 ${getColorByTime(
+              environment.start,
+              environment.end,
+              environment.status
+            )}`}
+            style={{ width: 150, minHeight: "50px" }}
+          >
+            {environment.status === EnvStatusTypes.ACTIVE ||
+            environment.status === EnvStatusTypes.FAILURE
+              ? environment.version
+              : `${EnvStatusTypes.LOADING} ...`}
+          </Flex>
+        );
+      },
+    },
     ...generateDynamicColumns(dynamicColumns),
-    // ...dynamicColumns,
   ];
 
   return (
     <>
-      <Button type="primary" onClick={addColumn} style={{ marginBottom: 16 }}>
+      {/* <Button type="primary" onClick={addColumn} style={{ marginBottom: 16 }}>
         1
       </Button>
       <Button type="primary" onClick={addColumn2} style={{ marginBottom: 16 }}>
         2
-      </Button>
+      </Button> */}
       <ConfigProvider
         theme={{
           components: {
