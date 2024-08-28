@@ -90,12 +90,9 @@ export default function Home() {
       version: "version",
       start: "2024-08-13T10:00:00",
       end: "2024-08-13T18:30:00",
-      status: "active",
+      status: "loading",
     };
 
-    const newValue2 = "test";
-
-    console.log("applications", applications);
     const appNames = applications.map((app: any) => app.label);
 
     // Update the state to include the new dynamic key in each object
@@ -107,23 +104,23 @@ export default function Home() {
           ...item.details, // Spread existing details
           changeLog: {
             ...item.details.changeLog, // Spread existing changelog
-            [dynamicKey]: appNames.includes(item.name) ? newValue2 : " ", // Add new key to changelog
+            [dynamicKey]: appNames.includes(item.name) ? "-" : " ", // Add new key to changelog
           },
           deploymentDateTime: {
             ...item.details.deploymentDateTime, // Spread existing uat
-            [dynamicKey]: appNames.includes(item.name) ? newValue2 : " ", // Add new key to uat
+            [dynamicKey]: appNames.includes(item.name) ? "-" : " ", // Add new key to uat
           },
           deploymentHistory: {
             ...item.details.deploymentHistory, // Spread existing uat
-            [dynamicKey]: appNames.includes(item.name) ? newValue2 : " ", // Add new key to uat
+            [dynamicKey]: appNames.includes(item.name) ? "-" : " ", // Add new key to uat
           },
           pipelineRun: {
             ...item.details.pipelineRun, // Spread existing uat
-            [dynamicKey]: appNames.includes(item.name) ? newValue2 : " ", // Add new key to uat
+            [dynamicKey]: appNames.includes(item.name) ? "-" : " ", // Add new key to uat
           },
           rollback: {
             ...item.details.rollback, // Spread existing uat
-            [dynamicKey]: appNames.includes(item.name) ? newValue2 : " ", // Add new key to uat
+            [dynamicKey]: appNames.includes(item.name) ? "-" : " ", // Add new key to uat
           },
         },
         [dynamicKey]: appNames.includes(item.name) ? newValue : null,
@@ -134,8 +131,6 @@ export default function Home() {
   };
 
   const handleSubmit = (values: ICreateEnv) => {
-    console.log("values", values);
-
     const { environment, applications, gitBranch } = values;
 
     addColumn(environment, applications);

@@ -27,31 +27,38 @@ export const CustomModal: React.FC<IModal> = ({
   applications,
   handleSubmit,
 }) => {
-  const [selValues, setSelValues] = useState<TApplication[]>([]);
+  const [selectedValues, setSelectedValues] = useState<TApplication[]>([]);
   const [searchInput, setSearchInput] = useState<string>("");
   const [inputsValues, setInputsValues] =
     useState<TInputsValues>(initialValues);
 
-  const handleCheckboxChange = (checked: boolean, option: TApplication) => {
-    const newValue = checked
-      ? [...selValues, { label: option.label, value: option.value }]
-      : selValues.filter((project) => project.value !== option.value);
-
-    setSelValues(newValue); // Update the state with the new value
-  };
-
-  const handleRemoveProject = (value: string) => {
-    const projectListUpdated = selValues.filter(
-      (project) => project.value !== value
-    );
-
-    setSelValues([...projectListUpdated]);
-  };
-
-  // Filter options based on search input
   const filteredOptions = applications.filter((app) =>
     app.label.toLowerCase().includes(searchInput.toLowerCase())
   );
+
+  const handleCheckboxChange = (checked: boolean, option: TApplication) => {
+    const newValue = checked
+      ? [...selectedValues, { label: option.label, value: option.value }]
+      : selectedValues.filter((project) => project.value !== option.value);
+
+    setSelectedValues(newValue); // Update the state with the new value
+  };
+
+  const handleCheckboxAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedValues([...filteredOptions]);
+    } else {
+      setSelectedValues([]);
+    }
+  };
+
+  const handleRemoveProject = (value: string) => {
+    const projectListUpdated = selectedValues.filter(
+      (project) => project.value !== value
+    );
+
+    setSelectedValues([...projectListUpdated]);
+  };
 
   const handleInputsChange = (e: any) => {
     const { name, value } = e.target;
@@ -64,13 +71,20 @@ export const CustomModal: React.FC<IModal> = ({
 
   const handleSend = () => {
     const objectToRetrive = {
-      applications: [...selValues],
+      applications: [...selectedValues],
       environment: inputsValues.environment,
       gitBranch: inputsValues.gitBranch,
     };
 
     handleSubmit(objectToRetrive);
+    setInputsValues({ environment: "", gitBranch: "" });
+    setSelectedValues([]);
   };
+
+  const canSubmit =
+    inputsValues.environment === "" ||
+    inputsValues.gitBranch === "" ||
+    selectedValues.length === 0;
 
   return (
     <>
@@ -84,7 +98,7 @@ export const CustomModal: React.FC<IModal> = ({
             Create new environment
             <Button
               onClick={() => {
-                setSelValues([]);
+                setSelectedValues([]);
                 setInputsValues(initialValues);
                 handleCancel();
               }}
@@ -105,32 +119,49 @@ export const CustomModal: React.FC<IModal> = ({
               <span>Applications</span>
               <Select
                 size="middle"
-                placeholder="Please select"
+                placeholder="Select application"
                 style={{ width: "100%" }}
                 showSearch
                 filterOption={false} // Disable default filtering
                 onSearch={(value) => setSearchInput(value)} // Update search input state
                 popupMatchSelectWidth={false}
                 dropdownRender={(menu) => (
-                  <Flex vertical>
-                    {filteredOptions.map((option) => (
-                      <Flex
-                        key={option.value}
-                        justify="space-between"
-                        className="c-p-1"
-                        gap={10}
-                      >
-                        {option.label}
-                        <Checkbox
-                          checked={selValues.some(
-                            (project) => project.value === option.value
-                          )}
-                          onChange={(e) =>
-                            handleCheckboxChange(e.target.checked, option)
-                          }
-                        />
-                      </Flex>
-                    ))}
+                  <Flex vertical className="c-p-1">
+                    <Flex
+                      className="c-p-1 c-border-botton-gray"
+                      justify="space-between"
+                    >
+                      <span>Select all</span>
+                      <Checkbox
+                        onChange={(e) => handleCheckboxAll(e.target.checked)}
+                      />
+                    </Flex>
+                    <div
+                      style={{
+                        maxHeight: 250,
+                        overflow: "scroll",
+                        // padding: "10px 0px",
+                      }}
+                    >
+                      {filteredOptions.map((option) => (
+                        <Flex
+                          key={option.value}
+                          justify="space-between"
+                          className="c-p-1"
+                          gap={10}
+                        >
+                          {option.label}
+                          <Checkbox
+                            checked={selectedValues.some(
+                              (project) => project.value === option.value
+                            )}
+                            onChange={(e) =>
+                              handleCheckboxChange(e.target.checked, option)
+                            }
+                          />
+                        </Flex>
+                      ))}
+                    </div>
                   </Flex>
                 )}
               >
@@ -141,7 +172,7 @@ export const CustomModal: React.FC<IModal> = ({
                 ))}
               </Select>
               <Flex vertical gap={10}>
-                {selValues.map((project) => (
+                {selectedValues.map((project) => (
                   <Flex
                     key={project.value}
                     align="center"
@@ -165,7 +196,7 @@ export const CustomModal: React.FC<IModal> = ({
                 value={inputsValues.environment}
                 name="environment"
                 onChange={(e) => handleInputsChange(e)}
-                placeholder="Preprod"
+                placeholder="Enter the environment"
               ></Input>
             </Flex>
             <Flex vertical gap={10}>
@@ -174,15 +205,14 @@ export const CustomModal: React.FC<IModal> = ({
                 value={inputsValues.gitBranch}
                 name="gitBranch"
                 onChange={(e) => handleInputsChange(e)}
-                placeholder="Branch"
+                placeholder="Enter the Git Branch"
               ></Input>
             </Flex>
           </Flex>
           <Flex className="c-w-100" justify="center">
-            <Button onClick={handleSend} type="primary">
+            <Button onClick={handleSend} type="primary" disabled={canSubmit}>
               Create new environment
             </Button>
-            {/* <Button onClick={handleTest}>test</Button> */}
           </Flex>
         </Flex>
       </Modal>
